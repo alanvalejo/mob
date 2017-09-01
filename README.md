@@ -1,3 +1,3 @@
 # mob
 
-*will be available from 10/2017
+This software is coming soon!
