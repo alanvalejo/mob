@@ -6,7 +6,7 @@ This is an Python implementation of multilevel framework for handling bipartite 
 
 **Download**
 
-* You can download the OPM software in http://www.alanvalejo.com.br/software?name=MOb
+* You can download the MOb software in http://www.alanvalejo.com.br/software?name=MOb
 
 **Usage**
 
