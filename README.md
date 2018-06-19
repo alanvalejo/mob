@@ -10,7 +10,13 @@ This is an Python implementation of multilevel framework for handling bipartite 
 
 **Usage**
 
-    $ python coarsening.py [options]
+> Coarsening by levels. The user defines the number of levels and the reduction factor at each level.
+
+	$ python coarsening-level.py [options]
+
+> Coarsening until a max number of vertices. The process will automatically control the total number of levels and the reduction factor at each level.
+
+	$ python coarsening-max-vertices.py [options]
 
 |Option            |Domain           |Default   |Description                          |
 |------------------|-----------------|----------|-------------------------------------|
@@ -20,6 +26,7 @@ This is an Python implementation of multilevel framework for handling bipartite 
 |-o --output       |string [FILE]    |filename  |name of the FILE to be save          |
 |-r --rf           |array in (0 0.5] |[0.5 0.5] |reduction factor for each layer      |
 |-m --ml           |array in [0 n]   |[3 3]     |max levels for each layer            |
+|-mv --max_vertices|array in [0 n]   |None      |max number of vertices for each layer; supress -r and -m parameters|
 |-c --matching     |string           |None      |matching method for each layer       |
 |-s --similarity   |string           |None      |similarity measure for each layer    |
 |-cf --conf        |string [FILE]    |None      |name of the config FILE to be loaded |
@@ -56,35 +63,40 @@ The matching strategy is, therefore, a key component of an effective multilevel 
 
 We test a scientific collaboration network (Cond-Mat), available [here](https://toreopsahl.com/datasets/#newman2001), which is based on preprints posted in the Condensed Matter section (arXiv) between 1995 and 1999 and has 38.742 vertices (authors and papers) and 58.595 edges (authorship) among different types of vertices.
 
-$ python coarsening.py -f input/condmat9599R16726C22016.ncol -v 16726 22016 -m 1 1 -r 0.5 0.5 --show_timing
+	$ python coarsening-level.py -f input/condmat1995to1999.ncol -v 16726 22016 -m 1 1 -r 0.5 0.5 --show_timing
 
-	Snippet   Time [m]   Time [s]
-			Load        0.0     0.4741
-Coarsening        0.0     0.7274
-			Save        0.0     0.1087
+|Snippet   |Time [m]|Time [s]|
+|----------|--------|--------|
+|Load      |0.0     |0.4741  |
+|Coarsening|0.0     |0.7274  |
+|Save      |0.0     |0.1087  |
 
-$ python coarsening.py -f input/condmat9599R16726C22016.ncol -v 16726 22016 -m 2 2 -r 0.5 0.5 --show_timing
+	$ python coarsening-level.py -f input/condmat1995to1999.ncol -v 16726 22016 -m 2 2 -r 0.5 0.5 --show_timing
 
-	Snippet   Time [m]   Time [s]
-			Load        0.0     0.4807
-Coarsening        0.0     1.1317
-			Save        0.0     0.0340
+|Snippet   |Time [m]|Time [s]|
+|----------|--------|--------|
+|Load      |0.0     |0.4807  |
+|Coarsening|0.0     |1.1317  |
+|Save      |0.0     |0.0340  |
 
-$ python coarsening.py -f input/condmat9599R16726C22016.ncol -v 16726 22016 -m 3 3 -r 0.5 0.5 --show_timing
 
-	Snippet   Time [m]   Time [s]
-			Load        0.0     0.4830
-Coarsening        0.0     1.3437
-			Save        0.0     0.0467
+	$ python coarsening-level.py -f input/condmat1995to1999.ncol -v 16726 22016 -m 3 3 -r 0.5 0.5 --show_timing
 
-You can use a config file (.json) to specify the parameters, for instance:
+|Snippet   |Time [m]|Time [s]|
+|----------|--------|--------|
+|Load      |0.0     |0.4830  |
+|Coarsening|0.0     |1.3437  |
+|Save      |0.0     |0.0467  |
 
-    $ python coarsening.py -cf input/condmat9599R16726C22016.json
+
+You can use a config file (.json) to specify the parameters.
+
+    $ python coarsening-level.py -cf input/condmat9599R16726C22016.json
 
 **Dependencies**
 
 * Python: tested with version 2.7.13.
-* Packages needed: igraph and numpy.
+* Packages required: [igraph](http://igraph.sourceforge.net); [scipy](http://www.scipy.org/); [sklearn](http://scikit-learn.org/); [numpy](http://www.numpy.org/)
 
 **Known Bugs**
 
@@ -106,14 +118,14 @@ Please contact the author for problems and bug report.
 * License will expire in 2018, July, and will be renewed.
 
 **References**
-> [1] Valejo, A.; Ferreira V.; Rocha Filho, G. P.; Oliveira, M. C. F.; and Lopes, A. A.: A Multilevel approach for combinatorial optimization in bipartite networks. Knowledge-Based Systems (2018)
+> [1] Valejo, A.; Rocha Filho, G. P.; Oliveira, M. C. F.; and Lopes, A. A.: A Multilevel approach for combinatorial optimization in bipartite networks. Knowledge-Based Systems (2018)
 
 ~~~~~{.bib}
 @article{Alan_2014,
-    author={Valejo, A.; Ferreira V.; Rocha Filho, G. P.; Oliveira, M. C. F.; and Lopes, A. A.},
+    author={Valejo, A.; Rocha Filho, G. P.; Oliveira, M. C. F.; and Lopes, A. A.},
     title={Multilevel approach for combinatorial optimization in bipartite networks},
     journal={Knowledge-Based Systems},
-    year={2017},
+    year={2018},
 }
 ~~~~~
 
